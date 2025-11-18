@@ -10,8 +10,6 @@ from azure.search.documents import SearchClient
 from azure.search.documents.indexes import SearchIndexClient
 from config import get_logger
 
-# initialize logging object
-logger = get_logger(__name__)
 
 # create a project client using environment variables loaded from the .env file
 project = AIProjectClient.from_connection_string(
@@ -32,6 +30,10 @@ index_client = SearchIndexClient(
     endpoint=search_connection.endpoint_url, credential=AzureKeyCredential(key=search_connection.key)
 )
 # </imports_and_config>
+
+# initialize logging object
+logger = get_logger(__name__)
+
 
 # <create_search_index>
 import pandas as pd
@@ -169,7 +171,7 @@ def create_index_from_csv(index_name, csv_file):
         index_client.delete_index(index_name)
         logger.info(f"🗑️  Found existing index named '{index_name}', and deleted it")
     except Exception:
-        pass
+        p1ass
 
     # create an empty search index
     index_definition = create_index_definition(index_name, model=os.environ["EMBEDDINGS_MODEL"])

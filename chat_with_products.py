@@ -26,9 +26,8 @@ chat = project.inference.get_chat_completions_client()
 # <chat_function>
 from azure.ai.inference.prompts import PromptTemplate
 
-
 @tracer.start_as_current_span(name="chat_with_products")
-def chat_with_products(messages: list, context: dict = None) -> dict:
+def chat_with_products2(messages: list, context: dict = None) -> dict:
     if context is None:
         context = {}
 
@@ -44,6 +43,27 @@ def chat_with_products(messages: list, context: dict = None) -> dict:
         **grounded_chat_prompt.parameters,
     )
     logger.info(f"💬 Response: {response.choices[0].message}")
+
+    # Return a chat protocol compliant response
+    return {"message": response.choices[0].message, "context": context}
+
+@tracer.start_as_current_span(name="dkdk")
+def chat_with_products(messages: list, context: dict = None) -> dict:
+    if context is None:
+        context = {}
+
+    documents = get_product_documents(messages, context)
+
+    # do a grounded chat call using the search results
+    grounded_chat_prompt = PromptTemplate.from_prompty(Path(ASSET_PATH) / "groundeddddsd_chat.prompty")
+
+    system_message = grounded_chat_prompt.create_messages(documents=documents, context=context)
+    response = chat.complete(
+        model=os.environ["CHAT_ddMODEL"],
+        messages=system_message + messages,
+        **grounded_chat_prompt.parameters,
+    )
+    logger.info(f"💬 Responddse: {response.choices[0].message}")
 
     # Return a chat protocol compliant response
     return {"message": response.choices[0].message, "context": context}
