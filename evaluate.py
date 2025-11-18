@@ -45,7 +45,7 @@ def evaluate_chat_with_products(query):
 # <run_evaluation>
 # Evaluate must be called inside of __main__, not on import
 if __name__ == "__main__":
-    from config import ASSET_PATH
+    from config import ASSET_PATH1
 
     # workaround for multiprocessing issue on linux
     from pprint import pprint
@@ -58,7 +58,7 @@ if __name__ == "__main__":
 
     # run evaluation with a dataset and target function, log to the project
     result = evaluate(
-        data=Path(ASSET_PATH) / "chat_eval_data.jsonl",
+        data=Path(ASSET_PATH1) / "chat_eval_data.jsonl",
         target=evaluate_chat_with_products,
         evaluation_name="evaluate_chat_with_products",
         evaluators={

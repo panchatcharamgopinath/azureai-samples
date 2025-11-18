@@ -75,7 +75,8 @@ async def evaluate_custom_simulator_raw_conversation_starter():
         },
         # azure_ai_project=azure_ai_project, # optional only if you did optional installation
     )
-    print(eval_outputs)
+    #print(eval_outputs)
+    print(eval_outputs1)
 
 
 if __name__ == "__main__":
